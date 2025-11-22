@@ -1,14 +1,4 @@
-Got it — the problem is that when you copy my answer, you sometimes also copy the ``` fences, so GitHub treats everything as one box and headings don’t work.
 
-So this time I’ll give you the **README with no fences at all**.
-👉 Do this:
-
-1. Open `README.md`.
-2. **Delete everything** inside it.
-3. Copy **from the next line starting with `API Health Checker` all the way to the last line** and paste into `README.md`.
-4. Don’t add any ``` or extra symbols.
-
-Here is your **full, error-free README.md**:
 
 ---
 
@@ -24,7 +14,7 @@ It sends an HTTP request to a URL and shows the status, status code, response ti
 * Backend: **Python 3 + Django**
 * Frontend: **HTML + CSS**
 * Database: **SQLite** (default Django database)
-* HTTP client: **requests** library
+* HTTP client: **`requests`** library
 
 The project is kept simple and readable so it’s easy to understand, present, and extend.
 
@@ -64,38 +54,52 @@ The project is kept simple and readable so it’s easy to understand, present, a
 
 1. **Clone the repository**
 
-   git clone [https://github.com/](https://github.com/)<your-username>/API-health-checker.git
+   ```bash
+   git clone https://github.com/<your-username>/API-health-checker.git
    cd API-health-checker
+   ```
 
 2. **Create and activate a virtual environment**
 
-   Windows:
+   **Windows:**
 
+   ```bash
    python -m venv venv
    venv\Scripts\activate
+   ```
 
-   Linux / macOS:
+   **Linux / macOS:**
 
+   ```bash
    python3 -m venv venv
    source venv/bin/activate
+   ```
 
 3. **Install dependencies**
 
    If you have `requirements.txt`:
 
+   ```bash
    pip install -r requirements.txt
+   ```
 
-   or at minimum:
+   Or at minimum:
 
+   ```bash
    pip install django requests
+   ```
 
 4. **Apply database migrations**
 
+   ```bash
    python manage.py migrate
+   ```
 
 5. **Create a superuser (for Django admin and favourite APIs)**
 
+   ```bash
    python manage.py createsuperuser
+   ```
 
 ---
 
@@ -103,27 +107,32 @@ The project is kept simple and readable so it’s easy to understand, present, a
 
 Run the development server:
 
+```bash
 python manage.py runserver
+```
 
 Open the app in your browser:
 
 * Dashboard: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 * Admin: [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
 
-Django will automatically reload the server on code changes while `runserver` is running.
+Django automatically reloads the server on code changes while `runserver` is running.
 
 ---
 
 ## BUILDING
 
 For college/demo use, `runserver` is usually enough.
+
 For a simple production-style setup:
 
 1. Set `DEBUG = False` and update `ALLOWED_HOSTS` in `api_health_checker/settings.py`.
 
 2. Collect static files:
 
+   ```bash
    python manage.py collectstatic
+   ```
 
 3. Deploy behind a proper server (for example Gunicorn + Nginx) if you host it on a real server.
 
@@ -154,10 +163,10 @@ api_health_checker_project/
    └─ static/
       └─ monitor/
          └─ style.css      # Simple styling
-
+```
 
 ---
----
+
 ## USAGE
 
 1. Open the **dashboard** (`/`).
@@ -209,7 +218,9 @@ The current version is simple and synchronous. Ideas to improve it:
 
 Install dependencies inside the virtual environment:
 
+```bash
 pip install django requests
+```
 
 ---
 
@@ -217,8 +228,10 @@ pip install django requests
 
 Try:
 
+```bash
 py manage.py runserver          # Windows (py launcher)
 python3 manage.py runserver     # Linux / macOS
+```
 
 ---
 
@@ -227,8 +240,10 @@ python3 manage.py runserver     # Linux / macOS
 * Make sure `DEBUG = True` in `settings.py` (for development).
 * Check that your template has:
 
-  `{% load static %}` and
-  `<link rel="stylesheet" href="{% static 'monitor/style.css' %}">`
+  ```html
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'monitor/style.css' %}">
+  ```
 
 ---
 
@@ -236,8 +251,10 @@ python3 manage.py runserver     # Linux / macOS
 
 Run:
 
+```bash
 python manage.py makemigrations
 python manage.py migrate
+```
 
 ---
 
@@ -249,9 +266,12 @@ Uptime is calculated per URL:
 * If every check is DOWN → **0%**
 
 You only see values between 0 and 100 when the **same URL** has both UP and DOWN results.
+
 Example test URL:
 
-[https://httpbin.org/status/200,500](https://httpbin.org/status/200,500)
+```text
+https://httpbin.org/status/200,500
+```
 
 This endpoint randomly returns 200 or 500, so the uptime will be somewhere in the middle.
 
