@@ -1,6 +1,3 @@
-Here’s a complete **README.md** you can use.
-Just paste this into your `README.md` file **exactly as it is** (don’t add extra ``` around it).
-
 ````markdown
 # API Health Checker ✅
 
