@@ -1,17 +1,30 @@
+Got it — the problem is that when you copy my answer, you sometimes also copy the ``` fences, so GitHub treats everything as one box and headings don’t work.
+
+So this time I’ll give you the **README with no fences at all**.
+👉 Do this:
+
+1. Open `README.md`.
+2. **Delete everything** inside it.
+3. Copy **from the next line starting with `API Health Checker` all the way to the last line** and paste into `README.md`.
+4. Don’t add any ``` or extra symbols.
+
+Here is your **full, error-free README.md**:
+
+---
 
 # API Health Checker ✅
 
-A small Django web app that checks the health of API endpoints in real time.  
+A small Django web app that checks the health of API endpoints in real time.
 It sends an HTTP request to a URL and shows the status, status code, response time, and uptime.
 
 ---
 
 ## API HEALTH CHECKER
 
-- Backend: **Python 3 + Django**
-- Frontend: **HTML + CSS**
-- Database: **SQLite** (default Django database)
-- HTTP client: **requests** library  
+* Backend: **Python 3 + Django**
+* Frontend: **HTML + CSS**
+* Database: **SQLite** (default Django database)
+* HTTP client: **requests** library
 
 The project is kept simple and readable so it’s easy to understand, present, and extend.
 
@@ -19,30 +32,31 @@ The project is kept simple and readable so it’s easy to understand, present, a
 
 ## FEATURES
 
-- ✅ Check any HTTP/HTTPS endpoint
-- ✅ Classify responses  
-  - 2xx → **UP**  
-  - 3xx → **UP (Redirect)**  
-  - 4xx / 5xx / network error → **DOWN**
-- ✅ Show HTTP status code and short meaning  
+* ✅ Check any HTTP/HTTPS endpoint
+* ✅ Classify responses
+
+  * 2xx → **UP**
+  * 3xx → **UP (Redirect)**
+  * 4xx / 5xx / network error → **DOWN**
+* ✅ Show HTTP status code and short meaning
   (for example: `200 OK`, `404 Not Found`, `500 Internal Server Error`)
-- ✅ Measure and display response time in milliseconds
-- ✅ Recent checks table  
+* ✅ Measure and display response time in milliseconds
+* ✅ Recent checks table
   (URL, Status, Status Code, Response Time, Checked At)
-- ✅ Uptime summary per URL  
+* ✅ Uptime summary per URL
   (Total Checks, UP Count, Uptime %, Last Checked)
-- ✅ History page for each URL
-- ✅ Favourite endpoints (managed via Django admin)
-- ✅ Error details stored for timeouts and connection failures
+* ✅ History page for each URL
+* ✅ Favourite endpoints (managed via Django admin)
+* ✅ Error details stored for timeouts and connection failures
 
 ---
 
 ## PREREQUISITES
 
-- Python **3.10+**
-- `pip` installed
-- (Recommended) virtual environment using `python -m venv`
-- Git (if you want to clone the repository)
+* Python **3.10+**
+* `pip` installed
+* (Recommended) virtual environment using `python -m venv`
+* Git (if you want to clone the repository)
 
 ---
 
@@ -50,38 +64,38 @@ The project is kept simple and readable so it’s easy to understand, present, a
 
 1. **Clone the repository**
 
-   ```bash
-   git clone https://github.com/<your-username>/API-health-checker.git
+   git clone [https://github.com/](https://github.com/)<your-username>/API-health-checker.git
    cd API-health-checker
-````
 
 2. **Create and activate a virtual environment**
 
-   ```bash
+   Windows:
+
    python -m venv venv
-   venv\Scripts\activate          # Windows
-   # source venv/bin/activate     # Linux / macOS
-   ```
+   venv\Scripts\activate
+
+   Linux / macOS:
+
+   python3 -m venv venv
+   source venv/bin/activate
 
 3. **Install dependencies**
 
-   ```bash
+   If you have `requirements.txt`:
+
    pip install -r requirements.txt
-   # or at minimum:
-   # pip install django requests
-   ```
+
+   or at minimum:
+
+   pip install django requests
 
 4. **Apply database migrations**
 
-   ```bash
    python manage.py migrate
-   ```
 
 5. **Create a superuser (for Django admin and favourite APIs)**
 
-   ```bash
    python manage.py createsuperuser
-   ```
 
 ---
 
@@ -89,9 +103,7 @@ The project is kept simple and readable so it’s easy to understand, present, a
 
 Run the development server:
 
-```bash
 python manage.py runserver
-```
 
 Open the app in your browser:
 
@@ -111,9 +123,7 @@ For a simple production-style setup:
 
 2. Collect static files:
 
-   ```bash
    python manage.py collectstatic
-   ```
 
 3. Deploy behind a proper server (for example Gunicorn + Nginx) if you host it on a real server.
 
@@ -121,24 +131,22 @@ For a simple production-style setup:
 
 ## PROJECT STRUCTURE
 
-```text
 api_health_checker_project/
 ├─ manage.py
 ├─ README.md
 ├─ api_health_checker/
 │  ├─ settings.py          # Django settings
 │  ├─ urls.py              # Root URL configuration
-│  └─ ...
+│  └─ …
 └─ monitor/
-   ├─ models.py            # HealthCheck, ApiEndpoint
-   ├─ views.py             # home(), history()
-   ├─ urls.py              # App URL routes
-   ├─ templates/monitor/
-   │  ├─ home.html         # Main dashboard
-   │  └─ history.html      # Per-URL history page
-   └─ static/monitor/
-      └─ style.css         # Simple styling
-```
+├─ models.py            # HealthCheck, ApiEndpoint
+├─ views.py             # home(), history()
+├─ urls.py              # App URL routes
+├─ templates/monitor/
+│  ├─ home.html         # Main dashboard
+│  └─ history.html      # Per-URL history page
+└─ static/monitor/
+└─ style.css         # Simple styling
 
 ---
 
@@ -168,14 +176,9 @@ api_health_checker_project/
 
 This project mainly provides a web UI, but important routes are:
 
-* `GET /`
-  Main dashboard. Optional `?url=<encoded-url>` query triggers a health check and stores the result.
-
-* `GET /history/?url=<encoded-url>`
-  Shows full history for a single URL.
-
-* `GET /admin/`
-  Django admin panel for users, `HealthCheck`, and `ApiEndpoint` models.
+* `GET /` – Main dashboard. Optional `?url=<encoded-url>` query triggers a health check and stores the result.
+* `GET /history/?url=<encoded-url>` – Shows full history for a single URL.
+* `GET /admin/` – Django admin panel for users, `HealthCheck`, and `ApiEndpoint` models.
 
 All external API calls are made internally using `requests.get()`.
 
@@ -198,9 +201,7 @@ The current version is simple and synchronous. Ideas to improve it:
 
 Install dependencies inside the virtual environment:
 
-```bash
 pip install django requests
-```
 
 ---
 
@@ -208,10 +209,8 @@ pip install django requests
 
 Try:
 
-```bash
 py manage.py runserver          # Windows (py launcher)
 python3 manage.py runserver     # Linux / macOS
-```
 
 ---
 
@@ -220,10 +219,8 @@ python3 manage.py runserver     # Linux / macOS
 * Make sure `DEBUG = True` in `settings.py` (for development).
 * Check that your template has:
 
-  ```html
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'monitor/style.css' %}">
-  ```
+  `{% load static %}` and
+  `<link rel="stylesheet" href="{% static 'monitor/style.css' %}">`
 
 ---
 
@@ -231,10 +228,8 @@ python3 manage.py runserver     # Linux / macOS
 
 Run:
 
-```bash
 python manage.py makemigrations
 python manage.py migrate
-```
 
 ---
 
@@ -248,11 +243,10 @@ Uptime is calculated per URL:
 You only see values between 0 and 100 when the **same URL** has both UP and DOWN results.
 Example test URL:
 
-```text
-https://httpbin.org/status/200,500
-```
+[https://httpbin.org/status/200,500](https://httpbin.org/status/200,500)
 
 This endpoint randomly returns 200 or 500, so the uptime will be somewhere in the middle.
 
 ---
 
+After pasting, save `README.md`, refresh GitHub — headings will be different sizes and all sections will render correctly.
