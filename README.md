@@ -4,7 +4,7 @@
 
 # API Health Checker ✅
 
-A small Django web app that checks the health of API endpoints in real time.
+A small Django web application that checks the health of API endpoints in real time.
 It sends an HTTP request to a URL and shows the status, status code, response time, and uptime.
 
 ---
