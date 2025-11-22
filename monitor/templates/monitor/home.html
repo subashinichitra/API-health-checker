@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API Health Checker</title>
+    <link rel="stylesheet" href="{% static 'monitor/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>API Health Checker</h1>
+        <p class="subtitle">
+            Enter any API URL below and click <strong>Check Health</strong> to see if it is up.
+        </p>
+
+        {% if favorite_apis %}
+            <div class="favorites">
+                <p class="favorites-title">Quick check your saved APIs:</p>
+                <div class="favorites-list">
+                    {% for api in favorite_apis %}
+                        <a href="/?url={{ api.url|urlencode }}" class="favorite-btn">
+                            {{ api.name }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <form method="get" class="check-form">
+            <label for="url">API URL</label>
+            <input
+                type="text"
+                id="url"
+                name="url"
+                placeholder="https://jsonplaceholder.typicode.com/posts"
+                value="{{ result.url|default:'' }}"
+                required
+            >
+            <button type="submit">Check Health</button>
+        </form>
+
+        {% if result %}
+            <div class="result-card">
+                <h2>Result</h2>
+
+                {% if result.error %}
+                    <p><strong>Status:</strong> <span class="status-bad">DOWN</span></p>
+                    <p><strong>Error:</strong> {{ result.error }}</p>
+                {% else %}
+                    <p>
+                        <strong>Status:</strong>
+                        {% if result.health_category %}
+                            {% if result.is_up %}
+                                <span class="status-good">{{ result.health_category }}</span>
+                            {% else %}
+                                <span class="status-bad">{{ result.health_category }}</span>
+                            {% endif %}
+                        {% else %}
+                            {% if result.is_up %}
+                                <span class="status-good">UP</span>
+                            {% else %}
+                                <span class="status-bad">DOWN</span>
+                            {% endif %}
+                        {% endif %}
+                    </p>
+                    <p><strong>Status Code:</strong> {{ result.status_code }}</p>
+                    {% if result.status_text %}
+                        <p><strong>Meaning:</strong> {{ result.status_text }}</p>
+                    {% endif %}
+                    {% if result.response_time_ms %}
+                        <p><strong>Response Time:</strong> {{ result.response_time_ms|floatformat:0 }} ms</p>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if recent_checks %}
+            <div class="history-card">
+                <h2>Recent Checks</h2>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>URL</th>
+                            <th>Status</th>
+                            <th>Status Code</th>
+                            <th>Response Time</th>
+                            <th>Checked At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for check in recent_checks %}
+                            <tr>
+                                <td class="url-cell">{{ check.url }}</td>
+                                <td>
+                                    {% if check.is_up %}
+                                        <span class="status-good">UP</span>
+                                    {% else %}
+                                        <span class="status-bad">DOWN</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if check.status_code is not None %}
+                                        {{ check.status_code }}
+                                    {% else %}
+                                        0
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if check.response_time_ms %}
+                                        {{ check.response_time_ms|floatformat:0 }} ms
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td>{{ check.checked_at|date:"Y-m-d H:i" }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+
+        {% if uptime_stats %}
+            <div class="history-card">
+                <h2>Uptime Summary (all checks)</h2>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>URL</th>
+                            <th>Total Checks</th>
+                            <th>UP Count</th>
+                            <th>Uptime %</th>
+                            <th>Last Checked</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in uptime_stats %}
+                            <tr>
+                                <td class="url-cell">
+                                    <a href="{% url 'history' %}?url={{ item.url|urlencode }}" class="link-url">
+                                        {{ item.url }}
+                                    </a>
+                                </td>
+                                <td>{{ item.total }}</td>
+                                <td>{{ item.up }}</td>
+                                <td>{{ item.uptime_percent|floatformat:1 }} %</td>
+                                <td>{{ item.last_checked|date:"Y-m-d H:i" }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

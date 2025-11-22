@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>History - API Health Checker</title>
+    <link rel="stylesheet" href="{% static 'monitor/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>API History</h1>
+
+        <p class="subtitle">
+            {% if url %}
+                Showing all recorded checks for:<br>
+                <strong>{{ url }}</strong>
+            {% else %}
+                No URL selected.
+            {% endif %}
+        </p>
+
+        <p><a href="/" class="back-link">← Back to Dashboard</a></p>
+
+        {% if checks %}
+            <div class="history-card">
+                <h2>Checks</h2>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Status Code</th>
+                            <th>Response Time</th>
+                            <th>Error</th>
+                            <th>Checked At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for check in checks %}
+                            <tr>
+                                <td>
+                                    {% if check.is_up %}
+                                        <span class="status-good">UP</span>
+                                    {% else %}
+                                        <span class="status-bad">DOWN</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if check.status_code is not None %}
+                                        {{ check.status_code }}
+                                    {% else %}
+                                        0
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if check.response_time_ms %}
+                                        {{ check.response_time_ms|floatformat:0 }} ms
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if check.error_message %}
+                                        {{ check.error_message|truncatechars:60 }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td>{{ check.checked_at|date:"Y-m-d H:i:s" }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p>No checks found for this URL yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
