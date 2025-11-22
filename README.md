@@ -131,22 +131,30 @@ For a simple production-style setup:
 
 ## PROJECT STRUCTURE
 
+```text
 api_health_checker_project/
 ├─ manage.py
 ├─ README.md
 ├─ api_health_checker/
+│  ├─ __init__.py
 │  ├─ settings.py          # Django settings
 │  ├─ urls.py              # Root URL configuration
-│  └─ …
+│  └─ wsgi.py
 └─ monitor/
-├─ models.py            # HealthCheck, ApiEndpoint
-├─ views.py             # home(), history()
-├─ urls.py              # App URL routes
-├─ templates/monitor/
-│  ├─ home.html         # Main dashboard
-│  └─ history.html      # Per-URL history page
-└─ static/monitor/
-└─ style.css         # Simple styling
+   ├─ __init__.py
+   ├─ models.py            # HealthCheck, ApiEndpoint
+   ├─ views.py             # home(), history()
+   ├─ urls.py              # App URL routes
+   ├─ migrations/
+   │  └─ ...
+   ├─ templates/
+   │  └─ monitor/
+   │     ├─ home.html      # Main dashboard
+   │     └─ history.html   # Per-URL history page
+   └─ static/
+      └─ monitor/
+         └─ style.css      # Simple styling
+
 
 ---
 
@@ -249,4 +257,4 @@ This endpoint randomly returns 200 or 500, so the uptime will be somewhere in th
 
 ---
 
-After pasting, save `README.md`, refresh GitHub — headings will be different sizes and all sections will render correctly.
+
