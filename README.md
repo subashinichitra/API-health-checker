@@ -1,5 +1,4 @@
 
-````markdown
 # API Health Checker ✅
 
 A small Django web app that checks the health of API endpoints in real time.  
